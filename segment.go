@@ -1,4 +1,4 @@
-//  Copyright (c) 2017 Couchbase, Inc.
+//  Copyright (c) 2020 Couchbase, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -128,6 +128,7 @@ type OptimizablePostingsIterator interface {
 
 type Posting interface {
 	Number() int
+	SetNumber(int)
 	Frequency() int
 	Norm() float64
 	Locations() []Location
@@ -152,10 +153,6 @@ type DocumentValueReader interface {
 }
 
 type DocVisitState interface {
-}
-
-type StatsReporter interface {
-	ReportBytesWritten(bytesWritten uint64)
 }
 
 type Optimizable interface {
