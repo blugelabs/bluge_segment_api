@@ -40,9 +40,9 @@ type Term interface {
 type Segment interface {
 	Dictionary(field string) (Dictionary, error)
 
-	VisitStoredFields(num int, visitor StoredFieldVisitor) error
+	VisitStoredFields(num uint64, visitor StoredFieldVisitor) error
 
-	Count() int
+	Count() uint64
 
 	DocsMatchingTerms([]Term) (*roaring.Bitmap, error)
 
@@ -76,7 +76,7 @@ type Dictionary interface {
 
 type DictionaryEntry interface {
 	Term() string
-	Count() int
+	Count() uint64
 }
 
 type DictionaryIterator interface {
@@ -89,7 +89,7 @@ type PostingsList interface {
 
 	Size() int
 
-	Count() int
+	Count() uint64
 
 	// NOTE deferred for future work
 
@@ -108,14 +108,14 @@ type PostingsIterator interface {
 	// or if there is no such posting, the next posting.
 	// Callers MUST NOT attempt to pass a docNum that is less than or
 	// equal to the currently visited posting doc Num.
-	Advance(docNum int) (Posting, error)
+	Advance(docNum uint64) (Posting, error)
 
 	Size() int
 
 	// is this postings iterator empty?
 	Empty() bool
 
-	Count() int
+	Count() uint64
 
 	Close() error
 }
@@ -127,8 +127,8 @@ type OptimizablePostingsIterator interface {
 }
 
 type Posting interface {
-	Number() int
-	SetNumber(int)
+	Number() uint64
+	SetNumber(uint64)
 	Frequency() int
 	Norm() float64
 	Locations() []Location
@@ -145,11 +145,11 @@ type Location interface {
 
 type Merger interface {
 	WriteTo(w io.Writer, closeCh chan struct{}) (n int64, err error)
-	DocumentNumbers() [][]int
+	DocumentNumbers() [][]uint64
 }
 
 type DocumentValueReader interface {
-	VisitDocumentValues(number int, visitor DocumentValueVisitor) error
+	VisitDocumentValues(number uint64, visitor DocumentValueVisitor) error
 }
 
 type DocVisitState interface {

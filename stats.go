@@ -18,13 +18,13 @@ type CollectionStats interface {
 
 	// TotalDocumentCount returns the number of documents, regardless of whether or not
 	// they have any terms for this field
-	TotalDocumentCount() int
+	TotalDocumentCount() uint64
 
 	// DocumentCount returns the number of documents with at least one term for this field
-	DocumentCount() int
+	DocumentCount() uint64
 
 	// SumTotalTermFrequency returns to total number of tokens across all documents
-	SumTotalTermFrequency() int
+	SumTotalTermFrequency() uint64
 
 	// SumDocumentFrequency returns the sum of all posting list entries for this field
 	// SumDocumentFrequency() int
@@ -35,7 +35,7 @@ type CollectionStats interface {
 type TermStats interface {
 
 	// DocumentFrequency returns the number of documents using this term
-	DocumentFrequency() int
+	DocumentFrequency() uint64
 
 	// TotalTermFrequency returns the total number of occurrences of this term
 	// TotalTermFrequency() int
